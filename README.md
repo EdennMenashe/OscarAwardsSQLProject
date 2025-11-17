@@ -2,7 +2,7 @@
 
 This project showcases the full design and implementation of a relational database for managing Oscar Awards information.  
 It includes ERD modeling, table creation (DDL), data population (DML), and analytical SQL queries (DQL).  
-All scripts are written for SQL Server (T-SQL).
+All scripts are written for SQL Server.
 
 ---
 
