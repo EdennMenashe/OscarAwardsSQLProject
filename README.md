@@ -1,41 +1,35 @@
-# **Oscar Database Design & SQL Analysis Project**
+# Oscar Database Design & SQL Analysis Project
 
 This project showcases the full design and implementation of a relational database for managing Oscar Awards information.  
 It includes ERD modeling, table creation (DDL), data population (DML), and analytical SQL queries (DQL).  
-All scripts are written for **SQL Server (T-SQL)**.
+All scripts are written for SQL Server (T-SQL).
 
 ---
 
-## **📁 Project Files**
-
-- **create_tables.sql** – DDL commands for creating all tables and relationships  
-- **insert_data.sql** – DML script containing sample data inserts  
-- **queries.sql** – Analytical SQL queries with explanations  
-- **ERD/ERD.png** – Entity Relationship Diagram representing the full schema  
+## Project Files
+- create_tables.sql – DDL script for creating all tables and relationships  
+- insert_data.sql – DML script containing sample data inserts  
+- queries.sql – Analytical SQL queries with explanations  
+- ERD/ERD.png – Entity Relationship Diagram representing the full schema  
 
 ---
 
-## **📊 Entity Relationship Diagram (ERD)**
+## Entity Relationship Diagram (ERD)
 
 ![ERD](ERD/ERD.png)
 
 The ERD includes:
-- Primary & Foreign Keys  
+- Primary and foreign keys  
 - Table relationships  
 - Cardinalities  
 - Data types  
-- Logical & physical database structure  
+- Logical and physical database structure  
 
 ---
 
-## **🗄️ Schema Overview (Entities & Attributes)**
+## Schema Overview (Entities and Attributes)
 
-Below is a brief summary of all tables and their key attributes.
-
----
-
-### **1. MembershipCategory**
-
+### 1. MembershipCategory
 Stores membership types and pricing.
 
 | Column | Type | Description |
@@ -46,8 +40,7 @@ Stores membership types and pricing.
 
 ---
 
-### **2. Membership**
-
+### 2. Membership
 Stores member details and links each member to a membership category.
 
 | Column | Type | Description |
@@ -58,12 +51,11 @@ Stores member details and links each member to a membership category.
 | LastName | Varchar(50) | Last name |
 | Address | Varchar(50) | Address |
 | JoinDate | Datetime | Joining date |
-| Email | Varchar(50) | Email |
+| Email | Varchar(50) | Email address |
 
 ---
 
-### **3. CompetitionJudge**
-
+### 3. CompetitionJudge
 Represents judges in movie competitions.
 
 | Column | Type | Description |
@@ -71,12 +63,12 @@ Represents judges in movie competitions.
 | MembershipID (PK, FK) | Char(9) | Membership reference |
 | Grade | Int | Judge rating (1–5) |
 | WorkPlaceID (FK) | Int | Workplace reference |
-| JudgeDate | Datetime | Date of the judging |
+| JudgeDate | Datetime | Date of judging |
 | MovieID (FK) | Int | Movie reference |
 
 ---
 
-### **4. WorkPlace**
+### 4. WorkPlace
 
 | Column | Type | Description |
 |--------|--------|-------------|
@@ -86,7 +78,7 @@ Represents judges in movie competitions.
 
 ---
 
-### **5. Producer**
+### 5. Producer
 
 | Column | Type | Description |
 |--------|--------|-------------|
@@ -98,8 +90,7 @@ Represents judges in movie competitions.
 
 ---
 
-### **6. Oscar**
-
+### 6. Oscar
 Represents Oscar events.
 
 | Column | Type | Description |
@@ -109,8 +100,7 @@ Represents Oscar events.
 
 ---
 
-### **7. OscarJudges**
-
+### 7. OscarJudges
 Many-to-many link between judges and Oscar events.
 
 | Column | Type | Description |
@@ -120,7 +110,7 @@ Many-to-many link between judges and Oscar events.
 
 ---
 
-### **8. Movie**
+### 8. Movie
 
 | Column | Type | Description |
 |--------|--------|-------------|
@@ -131,10 +121,9 @@ Many-to-many link between judges and Oscar events.
 
 ---
 
-### **9. MovieInOscar**  
-_(Fix: previously mislabeled as “Customer”)_
-
-Links movies to the Oscar events they participate in.
+### 9. MovieInOscar
+Links movies to the Oscar events they participate in.  
+(Note: previously incorrect name “Customer” was fixed.)
 
 | Column | Type | Description |
 |--------|--------|-------------|
@@ -143,45 +132,41 @@ Links movies to the Oscar events they participate in.
 
 ---
 
-## **🧠 SQL Queries Summary**
+## SQL Queries Summary
 
-Included in `queries.sql`:
+The queries in `queries.sql` include:
 
-### **Query 1 – Year with the highest number of Oscar wins**
-Returns the year with the most Oscar events.
+### Query 1 – Year with the highest number of Oscar wins
+Returns the year with the highest number of Oscar events.
 
-### **Query 2 – VIP members who joined in the last 10 years**
-Filters members with category “VIP”.
+### Query 2 – VIP members who joined in the last 10 years
+Filters members categorized as VIP based on JoinDate.
 
-### **Query 3 – Number of Oscar events per year**
-Counts events grouped by year.
+### Query 3 – Number of Oscar events per year
+Counts Oscar events grouped by year.
 
-### **Query 4 – Number of Oscars per producer**
-Joins Producer → Movie → MovieInOscar → Oscar.
+### Query 4 – Number of Oscars per producer
+Joins Producer → Movie → MovieInOscar → Oscar and counts wins per producer.
 
-### **Query 5 – Movies submitted by producers who were also judges**
-Identifies producers who also served as judges in the same year.
+### Query 5 – Movies submitted by producers who were also judges
+Identifies producers who submitted movies and served as judges in the same year.
 
 ---
 
-## **▶️ How to Run the Project**
-
+## How to Run the Project
 1. Run `create_tables.sql`  
 2. Run `insert_data.sql`  
 3. Run `queries.sql`  
 
-Designed and tested on **SQL Server**.
+Designed and tested on SQL Server.
 
 ---
 
-## **🎯 Project Purpose**
-
+## Project Purpose
 This project demonstrates:
-
 - Relational database design and normalization  
-- Creating a full schema from an ERD  
-- Use of PK, FK, constraints, and many-to-many relationships  
+- Creating a schema from an ERD  
+- Use of primary and foreign keys  
+- Handling many-to-many relationships  
 - Writing analytical SQL queries  
-- Data modeling skills relevant for **Data Analyst / BI / BizOps Analyst** roles  
-
----
+- Data modeling and structured problem-solving skills
