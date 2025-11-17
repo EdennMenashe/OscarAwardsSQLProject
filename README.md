@@ -1,182 +1,187 @@
-# Oscar Database Design & SQL Analysis Project
+# **Oscar Database Design & SQL Analysis Project**
 
-This project presents a complete relational database design and SQL implementation for an Oscar Awards management system.  
-It includes ERD modeling, table creation, data population, and analytical SQL queries.  
-All scripts are written for SQL Server (T-SQL).
-
----
-
-## Project Files
-
-- **create_tables.sql** – Contains all DDL commands for creating the database structure  
-- **insert_data.sql** – Inserts all sample records into the tables (DML)  
-- **queries.sql** – Includes all analytical SQL queries with English explanations  
-- **ERD/ERD.png** – The Entity Relationship Diagram of the database  
+This project showcases the full design and implementation of a relational database for managing Oscar Awards information.  
+It includes ERD modeling, table creation (DDL), data population (DML), and analytical SQL queries (DQL).  
+All scripts are written for **SQL Server (T-SQL)**.
 
 ---
 
-## Entity Relationship Diagram (ERD)
+## **📁 Project Files**
 
-The ERD below represents the full logical and physical structure of the Oscar Awards database:
+- **create_tables.sql** – DDL commands for creating all tables and relationships  
+- **insert_data.sql** – DML script containing sample data inserts  
+- **queries.sql** – Analytical SQL queries with explanations  
+- **ERD/ERD.png** – Entity Relationship Diagram representing the full schema  
+
+---
+
+## **📊 Entity Relationship Diagram (ERD)**
 
 ![ERD](ERD/ERD.png)
 
-The diagram includes:
-- Primary Keys  
-- Foreign Keys  
+The ERD includes:
+- Primary & Foreign Keys  
 - Table relationships  
+- Cardinalities  
 - Data types  
-- Full system structure  
+- Logical & physical database structure  
 
 ---
 
-## Schema Overview (Entities & Attributes)
+## **🗄️ Schema Overview (Entities & Attributes)**
 
-Below is a structured summary of all entities in the database, including their key fields and relationships.
+Below is a brief summary of all tables and their key attributes.
 
-### 1. MembershipCategory  
+---
+
+### **1. MembershipCategory**
+
 Stores membership types and pricing.
 
 | Column | Type | Description |
 |--------|--------|-------------|
-| Number (PK) | Int | Unique identifier of the membership type |
-| Category | Varchar(50) | Name of the membership type (VIP / Regular) |
-| Cost | Float | Cost of the membership |
+| Number (PK) | Int | Membership type ID |
+| Category | Varchar(50) | Membership name (VIP / Regular) |
+| Cost | Float | Membership price |
 
 ---
 
-### 2. Membership  
+### **2. Membership**
+
 Stores member details and links each member to a membership category.
 
 | Column | Type | Description |
-|--------|------|-------------|
+|--------|--------|-------------|
 | MembershipID (PK) | Char(9) | Unique member ID |
 | Number (FK) | Int | MembershipCategory.Number |
-| FirstName | Varchar(50) | Member first name |
-| LastName | Varchar(50) | Member last name |
-| Address | Varchar(50) | Member address |
-| JoinDate | Datetime | Date the member joined |
-| Email | Varchar(50) | Email address |
+| FirstName | Varchar(50) | First name |
+| LastName | Varchar(50) | Last name |
+| Address | Varchar(50) | Address |
+| JoinDate | Datetime | Joining date |
+| Email | Varchar(50) | Email |
 
 ---
 
-### 3. CompetitionJudge  
-Represents judges participating in movie judging events.
+### **3. CompetitionJudge**
+
+Represents judges in movie competitions.
 
 | Column | Type | Description |
 |--------|--------|-------------|
-| MembershipID (PK, FK) | Char(9) | Membership.MembershipID |
-| Grade | Int | Judge's rating (1–5) |
-| WorkPlaceID (FK) | Int | WorkPlace.WorkPlaceID |
-| JudgeDate | Datetime | Date of judging |
-| MovieID (FK) | Int | Movie.MovieID |
+| MembershipID (PK, FK) | Char(9) | Membership reference |
+| Grade | Int | Judge rating (1–5) |
+| WorkPlaceID (FK) | Int | Workplace reference |
+| JudgeDate | Datetime | Date of the judging |
+| MovieID (FK) | Int | Movie reference |
 
 ---
 
-### 4. WorkPlace  
-Represents places of employment for producers and judges.
+### **4. WorkPlace**
 
 | Column | Type | Description |
 |--------|--------|-------------|
-| WorkPlaceID (PK) | Int | Workplace identifier |
+| WorkPlaceID (PK) | Int | Workplace ID |
 | WorkPlaceName | Varchar(40) | Name of workplace |
 | WorkPlaceAddress | Varchar(50) | Address |
 
 ---
 
-### 5. Producer  
-Represents movie producers and the workplaces they belong to.
+### **5. Producer**
 
 | Column | Type | Description |
 |--------|--------|-------------|
-| ProducerID (PK) | Char(9) | Unique producer ID |
-| WorkPlaceID (FK) | Int | WorkPlace.WorkPlaceID |
-| FirstName | Varchar(50) | Producer first name |
-| LastName | Varchar(50) | Producer last name |
-| Address | Varchar(50) | Producer address |
+| ProducerID (PK) | Char(9) | Producer ID |
+| WorkPlaceID (FK) | Int | Workplace reference |
+| FirstName | Varchar(50) | First name |
+| LastName | Varchar(50) | Last name |
+| Address | Varchar(50) | Address |
 
 ---
 
-### 6. Oscar  
+### **6. Oscar**
+
 Represents Oscar events.
 
 | Column | Type | Description |
 |--------|--------|-------------|
-| OscarID (PK) | Int | Unique Oscar ID |
-| DateOfOscar | Datetime | Date of the Oscar event |
+| OscarID (PK) | Int | Oscar event ID |
+| DateOfOscar | Datetime | Event date |
 
 ---
 
-### 7. OscarJudges  
-Represents the link between judges and Oscar events (many-to-many).
+### **7. OscarJudges**
+
+Many-to-many link between judges and Oscar events.
 
 | Column | Type | Description |
 |--------|--------|-------------|
-| MembershipID (FK) | Char(9) | CompetitionJudge.MembershipID |
-| OscarID (FK) | Int | Oscar.OscarID |
+| MembershipID (FK) | Char(9) | Judge reference |
+| OscarID (FK) | Int | Oscar reference |
 
 ---
 
-### 8. Movie  
-Represents movies in the competition.
+### **8. Movie**
 
 | Column | Type | Description |
 |--------|--------|-------------|
-| MovieID (PK) | Int | Unique movie ID |
-| MovieName | Varchar(50) | Name of the movie |
+| MovieID (PK) | Int | Movie ID |
+| MovieName | Varchar(50) | Title |
 | DateOfMovie | Datetime | Release date |
-| ProducerID (FK) | Char(9) | Producer.ProducerID |
+| ProducerID (FK) | Char(9) | Producer reference |
 
 ---
 
-### 9. Customer  
-Represents which movies are associated with which Oscar event.
+### **9. MovieInOscar**  
+_(Fix: previously mislabeled as “Customer”)_
+
+Links movies to the Oscar events they participate in.
 
 | Column | Type | Description |
 |--------|--------|-------------|
-| MovieID (FK) | Int | Movie.MovieID |
-| OscarID (FK) | Int | Oscar.OscarID |
+| MovieID (FK) | Int | Movie reference |
+| OscarID (FK) | Int | Oscar event reference |
 
 ---
 
-## SQL Queries Summary
+## **🧠 SQL Queries Summary**
 
-All queries are documented inside `queries.sql`.  
-Below is a summary of the analytical queries included:
+Included in `queries.sql`:
 
-### Query 1 – Year with the highest number of Oscar wins  
-Counts Oscars per year and returns the year with the highest number of wins.
+### **Query 1 – Year with the highest number of Oscar wins**
+Returns the year with the most Oscar events.
 
-### Query 2 – VIP members who joined in the last 10 years  
-Filters VIP members (category = 1) based on JoinDate and DATEADD.
+### **Query 2 – VIP members who joined in the last 10 years**
+Filters members with category “VIP”.
 
-### Query 3 – Number of Oscar events per year  
-Groups Oscar events by date and counts occurrences.
+### **Query 3 – Number of Oscar events per year**
+Counts events grouped by year.
 
-### Query 4 – Number of Oscars per producer  
-Joins Producer → Movie → Oscar and counts Oscars per producer.
+### **Query 4 – Number of Oscars per producer**
+Joins Producer → Movie → MovieInOscar → Oscar.
 
-### Query 5 – Movies submitted by producers who also served as judges  
-Returns movies where the producer also served as a competition judge in the same year.
-
----
-
-## How to Run the Project
-
-1. Run `create_tables.sql` to create all tables  
-2. Run `insert_data.sql` to populate the database  
-3. Run `queries.sql` to execute the analytical queries  
-
-This project was designed and tested on SQL Server.
+### **Query 5 – Movies submitted by producers who were also judges**
+Identifies producers who also served as judges in the same year.
 
 ---
 
-## Project Purpose
+## **▶️ How to Run the Project**
+
+1. Run `create_tables.sql`  
+2. Run `insert_data.sql`  
+3. Run `queries.sql`  
+
+Designed and tested on **SQL Server**.
+
+---
+
+## **🎯 Project Purpose**
 
 This project demonstrates:
 
-- SQL querying skills  
-- Understanding of relational database modeling  
-- Ability to build a complete schema from an ERD  
-- Working with JOINs, GROUP BY, PK/FK constraints, and realistic data structures  
-- Analytical thinking and database design best practices  
+- Relational database design and normalization  
+- Creating a full schema from an ERD  
+- Use of PK, FK, constraints, and many-to-many relationships  
+- Writing analytical SQL queries  
+- Data modeling skills relevant for **Data Analyst / BI / BizOps Analyst** roles  
+
+---
